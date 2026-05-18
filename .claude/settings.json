@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(composer require:*)",
+      "Read(//usr/local/bin/**)",
+      "Read(//opt/**)",
+      "Read(///wsl.localhost/Ubuntu-24.04/proc/**)",
+      "Bash(./vendor/bin/sail composer:*)",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail composer require laravel/reverb\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan reverb:install\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan reverb:install --no-interaction\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan make:event FormSubmitted\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan make:controller Api/FormController\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan make:model Form -m\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan migrate\")",
+      "Bash(wsl -e bash -c \"cd /home/masterdba6/projetos/recursos-api && ./vendor/bin/sail artisan make:controller Api/EvaluationController --resource && ./vendor/bin/sail artisan make:controller Api/EvaluationAnswerController --resource && ./vendor/bin/sail artisan make:controller Api/EvaluationDocumentController --resource && ./vendor/bin/sail artisan make:controller Api/BenefitTypeController --resource && ./vendor/bin/sail artisan make:controller Api/IndefermentReasonController --resource\")"
+    ]
+  }
+}

@@ -1,0 +1,1227 @@
+{
+  "info": {
+    "name": "Recursos API",
+    "description": "Coleção completa da API de Recursos com todas as rotas",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Status",
+      "item": [
+        {
+          "name": "API Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/v1/status",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "status"]
+            },
+            "description": "Verifica o status da API"
+          },
+          "response": [
+            {
+              "name": "Status OK",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"status\": \"API V1 Recursos is alive!\"}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"email\": \"admin@example.com\", \"password\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/login",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "login"]
+            },
+            "description": "Realiza login na API e retorna token Bearer"
+          },
+          "response": [
+            {
+              "name": "Login Sucesso",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Login realizado com sucesso\", \"data\": {\"user\": {\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"name\": \"Admin User\", \"email\": \"admin@example.com\", \"created_at\": \"2026-05-12T10:00:00Z\"}, \"token\": \"1|abcdef1234567890abcdef1234567890abcdef1234567890\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Registrar",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"User Name\", \"email\": \"user@example.com\", \"password\": \"password\", \"password_confirmation\": \"password\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/register",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "register"]
+            },
+            "description": "Registra novo usuário"
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Dados do Usuário",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/me",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "me"]
+            },
+            "description": "Obtém dados do usuário autenticado (valida token)"
+          },
+          "response": [
+            {
+              "name": "Usuário Retornado",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"name\": \"Admin User\", \"email\": \"admin@example.com\", \"created_at\": \"2026-05-10T08:00:00Z\", \"updated_at\": \"2026-05-12T10:00:00Z\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/logout",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "logout"]
+            },
+            "description": "Realiza logout da API"
+          },
+          "response": []
+        },
+        {
+          "name": "Alterar Senha",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"current_password\": \"password123\", \"new_password\": \"newpassword456\", \"new_password_confirmation\": \"newpassword456\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/change-password",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "change-password"]
+            },
+            "description": "Altera a senha do usuário autenticado"
+          },
+          "response": [
+            {
+              "name": "Senha Alterada com Sucesso",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Senha alterada com sucesso.\"}"
+            }
+          ]
+        },
+        {
+          "name": "Criar Novo Usuário",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Novo Usuário\", \"email\": \"novouser@example.com\", \"password\": \"password123\", \"password_confirmation\": \"password123\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/users",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "users"]
+            },
+            "description": "Cria novo usuário (apenas usuários autenticados podem criar)"
+          },
+          "response": [
+            {
+              "name": "Usuário Criado com Sucesso",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Usuário criado com sucesso\", \"data\": {\"id\": 2, \"name\": \"Novo Usuário\", \"email\": \"novouser@example.com\", \"created_at\": \"2026-05-12T14:00:00Z\", \"updated_at\": \"2026-05-12T14:00:00Z\"}}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Solicitações de Benefício",
+      "item": [
+        {
+          "name": "Criar Solicitação de Benefício (Público)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"currentStep\": 1, \"status\": \"in_progress\", \"personalData\": {\"fullName\": \"John Doe\", \"cpf\": \"12345678900\", \"email\": \"john@example.com\", \"phone\": \"11999999999\"}, \"benefitSituation\": {\"type\": \"retirement\"}, \"benefitDetails\": {\"name\": \"Aposentadoria por Idade\", \"timeSinceNotification\": \"2 years\"}, \"defermentReason\": {\"reason\": \"Pending documentation\"}, \"documentation\": {\"fileName\": \"document.pdf\", \"fileSize\": 1024, \"base64Data\": \"base64encodedcontent\"}, \"analysis\": {\"analysis\": \"Analysis text\", \"advice\": \"Advice text\", \"recommendation\": \"Recommendation text\", \"documents\": []}, \"price\": 150.00, \"payment_status\": \"pending\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests"]
+            },
+            "description": "Cria nova solicitação de benefício (não requer autenticação)"
+          },
+          "response": [
+            {
+              "name": "Criado com Sucesso",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Solicitação de benefício criada com sucesso\", \"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"version\": \"1.0\", \"current_step\": 1, \"status\": \"in_progress\", \"personal_data\": {\"fullName\": \"John Doe\", \"cpf\": \"12345678900\", \"email\": \"john@example.com\"}, \"created_at\": \"2026-05-12T10:30:00Z\", \"updated_at\": \"2026-05-12T10:30:00Z\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Listar Solicitações de Benefício",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests"]
+            },
+            "description": "Lista todas as solicitações de benefício (paginado - 15 por página)"
+          },
+          "response": [
+            {
+              "name": "Lista com Sucesso",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"data\": [{\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"version\": \"1.0\", \"current_step\": 2, \"status\": \"in_progress\", \"personal_data\": {\"fullName\": \"John Doe\", \"email\": \"john@example.com\"}, \"price\": 150.00, \"payment_status\": \"pending\", \"created_at\": \"2026-05-12T10:30:00Z\", \"updated_at\": \"2026-05-12T11:00:00Z\"}], \"meta\": {\"current_page\": 1, \"from\": 1, \"last_page\": 5, \"per_page\": 15, \"to\": 15, \"total\": 75}}"
+            }
+          ]
+        },
+        {
+          "name": "Obter Solicitação de Benefício",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Obtém detalhes completos de uma solicitação específica"
+          },
+          "response": [
+            {
+              "name": "Solicitação Retornada",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"version\": \"1.0\", \"current_step\": 2, \"status\": \"in_progress\", \"personal_data\": {\"fullName\": \"John Doe\", \"cpf\": \"12345678900\", \"email\": \"john@example.com\", \"phone\": \"11999999999\"}, \"benefit_situation\": {\"type\": \"retirement\"}, \"benefit_details\": {\"name\": \"Aposentadoria por Idade\", \"timeSinceNotification\": \"2 years\"}, \"price\": 150.00, \"payment_status\": \"pending\", \"created_at\": \"2026-05-12T10:30:00Z\", \"updated_at\": \"2026-05-12T11:00:00Z\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar Status da Solicitação",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\": \"submitted\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests/:id/status",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests", ":id", "status"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Atualiza o status de uma solicitação. Valores: in_progress, submitted, completed"
+          },
+          "response": [
+            {
+              "name": "Status Atualizado",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Status atualizado com sucesso\", \"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440000\", \"status\": \"submitted\", \"current_step\": 2, \"updated_at\": \"2026-05-12T11:30:00Z\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Atualizar Etapa da Solicitação",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"currentStep\": 2}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests/:id/step",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests", ":id", "step"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Atualiza a etapa de uma solicitação"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Solicitação de Benefício (Público)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"currentStep\": 2, \"status\": \"in_progress\", \"personalData\": {\"fullName\": \"John Doe\", \"cpf\": \"12345678900\", \"email\": \"john@example.com\", \"phone\": \"11999999999\"}, \"benefitDetails\": {\"name\": \"Benefício atualizado\"}, \"analysis\": {\"analysis\": \"Updated analysis\", \"recommendation\": \"Updated recommendation\"}, \"price\": 200.00, \"payment_status\": \"paid\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Atualiza dados de uma solicitação de benefício (não requer autenticação)"
+          },
+          "response": []
+        },
+        {
+          "name": "Gerar/Baixar Documento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests/:id/document",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests", ":id", "document"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Gera e baixa documento PDF da solicitação de benefício"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Solicitação de Benefício",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-requests/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-requests", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Deleta uma solicitação de benefício"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Avaliações",
+      "item": [
+        {
+          "name": "Listar Avaliações",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations"]
+            },
+            "description": "Lista todas as avaliações"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Avaliação",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Evaluation Title\", \"description\": \"Evaluation Description\", \"status\": \"draft\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations"]
+            },
+            "description": "Cria nova avaliação. Status: draft ou published"
+          },
+          "response": [
+            {
+              "name": "Avaliação Criada",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Avaliação criada com sucesso\", \"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440111\", \"title\": \"Evaluation Title\", \"description\": \"Evaluation Description\", \"status\": \"draft\", \"created_at\": \"2026-05-12T11:00:00Z\", \"updated_at\": \"2026-05-12T11:00:00Z\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Obter Avaliação",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Obtém detalhes de uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Avaliação",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"title\": \"Updated Title\", \"status\": \"published\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Atualiza uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Avaliação",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Deleta uma avaliação"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Respostas de Avaliações",
+      "item": [
+        {
+          "name": "Criar Resposta de Avaliação",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"question_id\": 1, \"answer\": \"Answer text\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/answers",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "answers"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Cria resposta para uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Respostas da Avaliação",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/answers",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "answers"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Obtém respostas de uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Respostas da Avaliação",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"answer_id\": 1, \"answer\": \"Updated answer\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/answers",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "answers"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Atualiza respostas de uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Respostas da Avaliação",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/answers",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "answers"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Deleta respostas de uma avaliação"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Documentos de Avaliações",
+      "item": [
+        {
+          "name": "Listar Documentos da Avaliação",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/documents",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "documents"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Lista documentos de uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Documento da Avaliação",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "document",
+                  "value": "",
+                  "type": "file"
+                },
+                {
+                  "key": "title",
+                  "value": "Document Title",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/documents",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "documents"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                }
+              ]
+            },
+            "description": "Cria documento para uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Documento da Avaliação",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/documents/:document",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "documents", ":document"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                },
+                {
+                  "key": "document",
+                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                }
+              ]
+            },
+            "description": "Obtém um documento específico de uma avaliação"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Documento da Avaliação",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/evaluations/:evaluation/documents/:document",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "evaluations", ":evaluation", "documents", ":document"],
+              "variable": [
+                {
+                  "key": "evaluation",
+                  "value": "550e8400-e29b-41d4-a716-446655440000"
+                },
+                {
+                  "key": "document",
+                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                }
+              ]
+            },
+            "description": "Deleta um documento de uma avaliação"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Tipos de Benefício",
+      "item": [
+        {
+          "name": "Listar Tipos de Benefício",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-types",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-types"]
+            },
+            "description": "Lista todos os tipos de benefício"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Tipo de Benefício",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Aposentadoria por Idade\", \"description\": \"Benefício para aposentados por idade\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-types",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-types"]
+            },
+            "description": "Cria novo tipo de benefício"
+          },
+          "response": [
+            {
+              "name": "Tipo Criado",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Tipo de benefício criado com sucesso\", \"data\": {\"id\": 1, \"name\": \"Aposentadoria por Idade\", \"description\": \"Benefício para aposentados por idade\", \"created_at\": \"2026-05-12T12:00:00Z\", \"updated_at\": \"2026-05-12T12:00:00Z\"}}"
+            }
+          ]
+        },
+        {
+          "name": "Obter Tipo de Benefício",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-types/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Obtém detalhes de um tipo de benefício"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Tipo de Benefício",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Updated Name\", \"description\": \"Updated Description\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-types/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Atualiza um tipo de benefício"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Tipo de Benefício",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/benefit-types/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "benefit-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Deleta um tipo de benefício"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Razões de Indeferimento",
+      "item": [
+        {
+          "name": "Listar Razões de Indeferimento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/indeferment-reasons",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "indeferment-reasons"]
+            },
+            "description": "Lista todas as razões de indeferimento"
+          },
+          "response": []
+        },
+        {
+          "name": "Criar Razão de Indeferimento",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"reason\": \"Reason Text\", \"description\": \"Description\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/indeferment-reasons",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "indeferment-reasons"]
+            },
+            "description": "Cria nova razão de indeferimento"
+          },
+          "response": []
+        },
+        {
+          "name": "Obter Razão de Indeferimento",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/indeferment-reasons/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "indeferment-reasons", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Obtém detalhes de uma razão de indeferimento"
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar Razão de Indeferimento",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"reason\": \"Updated Reason\", \"description\": \"Updated Description\"}"
+            },
+            "url": {
+              "raw": "{{base_url}}/v1/indeferment-reasons/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "indeferment-reasons", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Atualiza uma razão de indeferimento"
+          },
+          "response": []
+        },
+        {
+          "name": "Deletar Razão de Indeferimento",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/v1/indeferment-reasons/:id",
+              "host": ["{{base_url}}"],
+              "path": ["v1", "indeferment-reasons", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "1"
+                }
+              ]
+            },
+            "description": "Deleta uma razão de indeferimento"
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
