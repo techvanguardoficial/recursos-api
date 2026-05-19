@@ -9,7 +9,9 @@
       "Bash(curl -i -X POST http://localhost/api/v1/benefit-requests -H 'Content-Type: application/json' -d '{:*)",
       "Read(//c/Users/Robson/.claude/projects/--wsl-localhost-Ubuntu-24-04-home-masterdba6-projetos-recursos-api/0f8f0a5d-4881-4ef4-8c23-1b039e1740ea/tool-results/**)",
       "Bash(rm -f bootstrap/cache/*.php)",
-      "Bash(curl -s -X POST http://localhost/api/v1/benefit-requests -H 'Content-Type: application/json' -d '{:*)"
+      "Bash(curl -s -X POST http://localhost/api/v1/benefit-requests -H 'Content-Type: application/json' -d '{:*)",
+      "Bash(php test_supabase.php)",
+      "Bash(docker exec *)"
     ]
   }
 }

@@ -5,19 +5,20 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Evaluation;
 use App\Models\EvaluationDocument;
+use App\Services\SupabaseStorageService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 class EvaluationDocumentController extends Controller
 {
+    public function __construct(private SupabaseStorageService $storage) {}
+
     public function index(Evaluation $evaluation)
     {
         $documents = $evaluation->documents()->get()->map(function ($doc) {
             return [
                 'id' => $doc->id,
                 'title' => $doc->title,
-                'url' => Storage::disk('supabase')->url($doc->file_path),
+                'url' => $this->storage->getPublicUrl($doc->file_path),
                 'file_size' => $doc->file_size,
                 'file_type' => $doc->file_type,
                 'created_at' => $doc->created_at,
@@ -35,16 +36,9 @@ class EvaluationDocumentController extends Controller
         ]);
 
         $file = $request->file('document');
+        $path = "evaluations/{$evaluation->id}/documents";
 
-        $filename = Str::uuid() . '.' . $file->getClientOriginalExtension();
-        $path = "evaluations/{$evaluation->id}/documents/{$filename}";
-
-        $uploaded = Storage::disk('supabase')->putFileAs(
-            "evaluations/{$evaluation->id}/documents",
-            $file,
-            $filename,
-            'public'
-        );
+        $uploaded = $this->storage->upload($file, $path);
 
         if (!$uploaded) {
             return response()->json([
@@ -55,7 +49,7 @@ class EvaluationDocumentController extends Controller
         $document = EvaluationDocument::create([
             'evaluation_id' => $evaluation->id,
             'title' => $request->title ?? $file->getClientOriginalName(),
-            'file_path' => $path,
+            'file_path' => $uploaded,
             'file_size' => $file->getSize(),
             'file_type' => $file->getClientMimeType(),
         ]);
@@ -65,7 +59,7 @@ class EvaluationDocumentController extends Controller
             'data' => [
                 'id' => $document->id,
                 'title' => $document->title,
-                'url' => Storage::disk('supabase')->url($document->file_path),
+                'url' => $this->storage->getPublicUrl($document->file_path),
                 'file_size' => $document->file_size,
                 'created_at' => $document->created_at,
             ],
@@ -84,7 +78,7 @@ class EvaluationDocumentController extends Controller
             'data' => [
                 'id' => $document->id,
                 'title' => $document->title,
-                'url' => Storage::disk('supabase')->url($document->file_path),
+                'url' => $this->storage->getPublicUrl($document->file_path),
                 'file_size' => $document->file_size,
                 'file_type' => $document->file_type,
                 'created_at' => $document->created_at,
@@ -100,7 +94,7 @@ class EvaluationDocumentController extends Controller
             ], 404);
         }
 
-        Storage::disk('supabase')->delete($document->file_path);
+        $this->storage->delete($document->file_path);
         $document->delete();
 
         return response()->json([

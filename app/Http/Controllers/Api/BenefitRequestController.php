@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\BenefitRequest;
+use App\Services\BenefitDocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class BenefitRequestController extends Controller
 {
+    public function __construct(private BenefitDocumentService $documentService) {}
+
     /**
      * Listar todas as solicitações de benefício
      */
@@ -66,6 +69,11 @@ class BenefitRequestController extends Controller
 
             'payment_status' => 'nullable|string|in:pending,paid,failed',
         ]);
+
+        // Processar documentação (converter base64 para URL do Supabase)
+        if (isset($validated['documentation'])) {
+            $validated['documentation'] = $this->documentService->processDocumentation($validated['documentation']);
+        }
 
         // Se vier um ID, atualizar; senão, criar novo
         if ($request->has('id') && $request->input('id')) {
@@ -217,7 +225,7 @@ class BenefitRequestController extends Controller
             $dataToUpdate['deferment_reason'] = $validated['defermentReason'];
         }
         if ($request->has('documentation')) {
-            $dataToUpdate['documentation'] = $validated['documentation'];
+            $dataToUpdate['documentation'] = $this->documentService->processDocumentation($validated['documentation']);
         }
         if ($request->has('analysis')) {
             $dataToUpdate['analysis'] = $validated['analysis'];

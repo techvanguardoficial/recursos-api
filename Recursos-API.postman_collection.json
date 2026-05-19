@@ -813,9 +813,22 @@
                 }
               ]
             },
-            "description": "Lista documentos de uma avaliação"
+            "description": "Lista todos os documentos de uma avaliação armazenados no Supabase Storage"
           },
-          "response": []
+          "response": [
+            {
+              "name": "Lista de Documentos",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"data\": [{\"id\": \"550e8400-e29b-41d4-a716-446655440002\", \"title\": \"Document Title\", \"url\": \"https://fzieuwcxlailaqtdvdja.supabase.co/storage/v1/object/public/recursos-api-uploads/evaluations/550e8400-e29b-41d4-a716-446655440000/documents/123e4567-e89b-12d3-a456-426614174000.pdf\", \"file_size\": 102400, \"file_type\": \"application/pdf\", \"created_at\": \"2026-05-12T14:30:00Z\"}, {\"id\": \"550e8400-e29b-41d4-a716-446655440003\", \"title\": \"Another Document\", \"url\": \"https://fzieuwcxlailaqtdvdja.supabase.co/storage/v1/object/public/recursos-api-uploads/evaluations/550e8400-e29b-41d4-a716-446655440000/documents/223e4567-e89b-12d3-a456-426614174001.docx\", \"file_size\": 51200, \"file_type\": \"application/vnd.openxmlformats-officedocument.wordprocessingml.document\", \"created_at\": \"2026-05-12T15:00:00Z\"}]}"
+            }
+          ]
         },
         {
           "name": "Criar Documento da Avaliação",
@@ -854,9 +867,22 @@
                 }
               ]
             },
-            "description": "Cria documento para uma avaliação"
+            "description": "Cria documento para uma avaliação. O arquivo é enviado para Supabase Storage com acesso público."
           },
-          "response": []
+          "response": [
+            {
+              "name": "Documento Criado com Sucesso",
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Documento salvo com sucesso\", \"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440002\", \"title\": \"Document Title\", \"url\": \"https://fzieuwcxlailaqtdvdja.supabase.co/storage/v1/object/public/recursos-api-uploads/evaluations/550e8400-e29b-41d4-a716-446655440000/documents/123e4567-e89b-12d3-a456-426614174000.pdf\", \"file_size\": 102400, \"created_at\": \"2026-05-12T14:30:00Z\"}}"
+            }
+          ]
         },
         {
           "name": "Obter Documento da Avaliação",
@@ -880,13 +906,26 @@
                 },
                 {
                   "key": "document",
-                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                  "value": "550e8400-e29b-41d4-a716-446655440002"
                 }
               ]
             },
-            "description": "Obtém um documento específico de uma avaliação"
+            "description": "Obtém um documento específico de uma avaliação com URL de acesso do Supabase Storage"
           },
-          "response": []
+          "response": [
+            {
+              "name": "Documento Retornado",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"data\": {\"id\": \"550e8400-e29b-41d4-a716-446655440002\", \"title\": \"Document Title\", \"url\": \"https://fzieuwcxlailaqtdvdja.supabase.co/storage/v1/object/public/recursos-api-uploads/evaluations/550e8400-e29b-41d4-a716-446655440000/documents/123e4567-e89b-12d3-a456-426614174000.pdf\", \"file_size\": 102400, \"file_type\": \"application/pdf\", \"created_at\": \"2026-05-12T14:30:00Z\"}}"
+            }
+          ]
         },
         {
           "name": "Deletar Documento da Avaliação",
@@ -910,13 +949,26 @@
                 },
                 {
                   "key": "document",
-                  "value": "550e8400-e29b-41d4-a716-446655440001"
+                  "value": "550e8400-e29b-41d4-a716-446655440002"
                 }
               ]
             },
-            "description": "Deleta um documento de uma avaliação"
+            "description": "Deleta um documento de uma avaliação (remove do Supabase Storage e do banco de dados)"
           },
-          "response": []
+          "response": [
+            {
+              "name": "Documento Deletado",
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\"message\": \"Documento deletado com sucesso\"}"
+            }
+          ]
         }
       ]
     },
