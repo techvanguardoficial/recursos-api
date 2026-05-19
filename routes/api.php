@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\EvaluationAnswerController;
 use App\Http\Controllers\Api\EvaluationDocumentController;
 use App\Http\Controllers\Api\BenefitTypeController;
 use App\Http\Controllers\Api\IndefermentReasonController;
+use App\Http\Controllers\Api\SessionTrackController;
 
 Route::prefix('v1')->group(function () {
 
@@ -24,6 +25,10 @@ Route::prefix('v1')->group(function () {
 
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
+
+    Route::post('/session-count', [SessionTrackController::class, 'store']);
+    Route::get('/session-count', [SessionTrackController::class, 'count']);
+
 
     Route::middleware('auth:sanctum')->group(function () {
         // Autenticação
