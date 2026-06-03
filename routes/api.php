@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\EvaluationDocumentController;
 use App\Http\Controllers\Api\BenefitTypeController;
 use App\Http\Controllers\Api\IndefermentReasonController;
 use App\Http\Controllers\Api\SessionTrackController;
+use App\Http\Controllers\Api\StatsController;
 
 Route::prefix('v1')->group(function () {
 
@@ -31,6 +32,7 @@ Route::prefix('v1')->group(function () {
 
 
     Route::middleware('auth:sanctum')->group(function () {
+        Route::get('stats', [StatsController::class, 'index']);
         // Autenticação
         Route::post('logout', [AuthController::class, 'logout']);
         Route::get('me', [AuthController::class, 'me']);

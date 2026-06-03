@@ -64,6 +64,7 @@ class BenefitRequestController extends Controller
             'analysis.advice' => 'nullable|string',
             'analysis.recommendation' => 'nullable|string',
             'analysis.documents' => 'nullable|array',
+            'analysis.content' => 'nullable|string',
 
             'price' => 'nullable|decimal:2',
 
@@ -198,6 +199,7 @@ class BenefitRequestController extends Controller
             'analysis.advice' => 'nullable|string',
             'analysis.recommendation' => 'nullable|string',
             'analysis.documents' => 'nullable|array',
+            'analysis.content' => 'nullable|string',
 
             'price' => 'nullable|decimal:2',
 
