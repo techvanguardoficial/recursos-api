@@ -15,10 +15,27 @@ class BenefitRequestController extends Controller
     /**
      * Listar todas as solicitações de benefício
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = BenefitRequest::query();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->input('status'));
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->input('search');
+            $query->where(function ($q) use ($search) {
+                $q->whereRaw("JSON_UNQUOTE(JSON_EXTRACT(personal_data, '$.fullName')) LIKE ?", ["%{$search}%"])
+                  ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(personal_data, '$.cpf')) LIKE ?", ["%{$search}%"])
+                  ->orWhereRaw("JSON_UNQUOTE(JSON_EXTRACT(personal_data, '$.email')) LIKE ?", ["%{$search}%"]);
+            });
+        }
+
+        $perPage = min((int) $request->input('per_page', 15), 100);
+
         return response()->json(
-            BenefitRequest::paginate(15),
+            $query->latest()->paginate($perPage),
             200
         );
     }
